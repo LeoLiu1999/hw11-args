@@ -6,19 +6,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-void parse_args(char * line){
-  char * args = strsep(line, " ");
-  printf("[%s]\n", strsep( line, " " ));
-  printf("%s\n",args);
-  return null;
+
+char **parse_args(char * line){
+  char **ret = calloc(100, 100);
+  ret[0]=line;
+  unsigned char i = 1;
+  char * args;
+  while( args = strsep(&line, " "))
+    ret[i++]=args;
+  return ret;
 }
-*/
+
 
 int main(){
-  char line[100] = "wow-this-is-cool";
-  char *s1 = line;
-  printf("[%s]\n", strsep( &s1, "-" ));
-  printf("[%s]\n", s1);
-  //parse_args("wahtever ewahtasdf asdfa");
+  char l[100] = "ls -l -a ..";
+  char *line = l;
+  char **args = parse_args(line);
+  printf("Executing \"%s\" with the following parameters\n", args[0]);
+  unsigned char i = 1;
+  while (args[i])
+    printf("%s\n",args[i++]);
 }
